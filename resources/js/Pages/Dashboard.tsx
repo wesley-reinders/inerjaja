@@ -1,10 +1,10 @@
 import React, { useState, FC } from 'react';
 import BlogTextInput from '@/Components/Blog/BlogTextInput';
 import { StandardLayout } from '@/Layouts/StandardLayout';
-import { Button, Center, Input, Stack, TextInput } from '@mantine/core';
+import { Button, Center, Grid, Input, Space, Stack, TextInput } from '@mantine/core';
 import { IconSection } from '@tabler/icons-react';
 
-const initialComponents: FC[] = [];
+const initialComponents: FC[] = [BlogTextInput];
 
 export default function Dashboard() {
     const [components, setComponents] = useState<FC[]>(initialComponents);
@@ -22,18 +22,22 @@ export default function Dashboard() {
         <StandardLayout>
             <Center>
                 <Stack
-                    h={300}
+                    w={500}
                     justify="center"
                     align="stretch"
                 >
-                    <TextInput
-                        label="Put in your title"
-                        placeholder="Header text"
-                    />
+                   
+                        <TextInput
+                            label="Put in your title"
+                            placeholder="Header text"
+                        />
+                        <Button>Choose header image</Button>
+                        <Space h="lg"/>
+                        {components.map((Component, index) => (
+                            <Component key={index} />
 
-                    {components.map((Component, index) => (
-                        <Component key={index} />
-                    ))}
+                        ))}
+                    
 
                     <Button
                         onClick={addSection}
