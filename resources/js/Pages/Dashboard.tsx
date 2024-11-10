@@ -1,26 +1,55 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import React, { useState, FC } from 'react';
+import BlogTextInput from '@/Components/Blog/BlogTextInput';
+import { StandardLayout } from '@/Layouts/StandardLayout';
+import { Button, Center, Input, Stack, TextInput } from '@mantine/core';
+import { IconSection } from '@tabler/icons-react';
+
+// Array of component types for reuse
+const initialComponents: FC[] = [];
 
 export default function Dashboard() {
-    return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
-            }
-        >
-            <Head title="Dashboard" />
+    // State to hold dynamically added components with proper typing
+    const [components, setComponents] = useState<FC[]>(initialComponents);
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in!
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </AuthenticatedLayout>
+    // Function to add a new component to the components array
+    const addComponent = (NewComponent: FC) => {
+        setComponents((prevComponents) => [...prevComponents, NewComponent]);
+    };
+
+    // Handler to add a new BlogTextInput section
+    const addSection = () => {
+        console.log("Adding a new section");
+        addComponent(BlogTextInput);
+    };
+
+    return (
+        <StandardLayout>
+            <Center>
+                <Stack
+                    h={300}
+                    justify="center"
+                    align="stretch"
+                >
+                    {/* Title input */}
+                    <TextInput
+                        label="Put in your title"
+                        placeholder="Header text"
+                    />
+
+                    {/* Render dynamic components */}
+                    {components.map((Component, index) => (
+                        <Component key={index} />
+                    ))}
+
+                    {/* Button to add new section */}
+                    <Button
+                        onClick={addSection}
+                        rightSection={<IconSection size={14} />}
+                    >
+                        Add new section
+                    </Button>
+                </Stack>
+            </Center>
+        </StandardLayout>
     );
 }
