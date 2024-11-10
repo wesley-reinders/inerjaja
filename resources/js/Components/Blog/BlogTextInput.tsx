@@ -6,7 +6,6 @@ const BlogTextInput: React.FC = () => {
         radius="md"
         placeholder="Section text"
   />
-    
 }
 
 export default BlogTextInput
