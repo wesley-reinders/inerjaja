@@ -1,4 +1,5 @@
 import BlogTextInput from '@/Components/Blog/BlogTextInput';
+import { Inertia } from '@inertiajs/inertia';
 import * as React from 'react';
 
 export interface DashboardProps {
@@ -33,6 +34,10 @@ export default class Dashboard extends React.Component<DashboardProps, Dashboard
         }));
     };
 
+    createBlog = () => {
+        Inertia.post(route('blogs.create'), { title: 'test', owner: 'testUser', content: JSON.stringify(['test']) });
+    }
+
     onChange= () => {
         this.props.onChange
     }
@@ -47,6 +52,7 @@ export default class Dashboard extends React.Component<DashboardProps, Dashboard
                         onChange={this.onChange}
                     />
                 ))}
+                <button onClick={this.createBlog}>Create Blog</button>
             </div>
         );
     }
