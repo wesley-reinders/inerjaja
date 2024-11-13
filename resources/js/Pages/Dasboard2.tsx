@@ -3,11 +3,10 @@ import { Inertia } from '@inertiajs/inertia';
 import * as React from 'react';
 
 export interface DashboardProps {
-    onChange: (text: string) => void;
 }
 
 export interface DashboardState {
-    components: number[]; // Array of identifiers for BlogTextInput instances
+    components: any[];
 }
 
 export default class Dashboard extends React.Component<DashboardProps, DashboardState> {
@@ -16,21 +15,29 @@ export default class Dashboard extends React.Component<DashboardProps, Dashboard
     constructor(props: DashboardProps) {
         super(props);
         
-        // Initialize a counter to generate unique IDs for each BlogTextInput
         this.idCounter = 1;
 
         this.state = {
-            components: [this.idCounter] // Initialize with one component
+            components: [{id: this.idCounter, text: ""}]
         };
     }
 
-    // Method to add a new BlogTextInput component
     addSection = () => {
         console.log("Adding a new section");
 
-        // Increment the counter and add a new ID to the components array
         this.setState((prevState) => ({
-            components: [...prevState.components, ++this.idCounter]
+            components: [...prevState.components, {id: ++this.idCounter, text: ''}]
+        }));
+    };
+
+    setText = (id: number, text: string) => {
+        this.setState((prevState) => ({
+            components: prevState.components.map((component) => {
+                console.log("Current component ID:", text);
+                return component.id === id
+                    ? { ...component, text: text } // Only update text for the matching ID
+                    : component;
+            }),
         }));
     };
 
@@ -38,18 +45,20 @@ export default class Dashboard extends React.Component<DashboardProps, Dashboard
         Inertia.post(route('blogs.create'), { title: 'test', owner: 'testUser', content: JSON.stringify(['test']) });
     }
 
-    onChange= () => {
-        this.props.onChange
+    onChange= (id: number, text: string) => {
+        // console.log(c)
+        this.setText(id, text)
     }
 
     public render() {
+        console.log(this.state.components)
         return (
             <div>
                 <button onClick={this.addSection}>Add Section</button>
-                {this.state.components.map((id) => (
+                {this.state.components.map((component) => (
                     <BlogTextInput
-                        key={id}
-                        onChange={this.onChange}
+                        key={component.id}
+                        onChange={(value: string) => this.onChange(component.id, value)}
                     />
                 ))}
                 <button onClick={this.createBlog}>Create Blog</button>
