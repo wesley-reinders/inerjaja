@@ -33,20 +33,18 @@ export default class Dashboard extends React.Component<DashboardProps, Dashboard
     setText = (id: number, text: string) => {
         this.setState((prevState) => ({
             components: prevState.components.map((component) => {
-                console.log("Current component ID:", text);
                 return component.id === id
-                    ? { ...component, text: text } // Only update text for the matching ID
+                    ? { ...component, text: text }
                     : component;
             }),
         }));
     };
 
     createBlog = () => {
-        Inertia.post(route('blogs.create'), { title: 'test', owner: 'testUser', content: JSON.stringify(['test']) });
+        Inertia.post(route('blogs.create'), { title: 'test', owner: 'testUser', content: JSON.stringify(this.state.components.map((component) => {return component.text})) });
     }
 
     onChange= (id: number, text: string) => {
-        // console.log(c)
         this.setText(id, text)
     }
 
