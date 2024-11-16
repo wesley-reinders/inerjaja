@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
+
 
 class StoreBlogRequest extends FormRequest
 {
@@ -25,6 +27,24 @@ class StoreBlogRequest extends FormRequest
             'title' => 'required|string',
             'content' => 'required|json',
             'owner' => 'required|string'
+        ];
+    }
+
+    public function after()
+    {
+        return [
+            function (Validator $validator) {
+                $content = json_decode(data_get($this, 'content'));
+
+                if ($validator->errors()->isNotEmpty()) {
+                    return;
+                }
+
+                if(count($content) > 5) {
+                    $validator->errors()->add('content', 'Content cannot have more than 20 sections.');
+                    return;
+                }
+            }
         ];
     }
 }

@@ -7,8 +7,12 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Dasboard2');
+    return Inertia::render('Login');
+})->name('login');
+
+Route::get('/blogs', function () {
+    return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::post('/blogs/create', [BlogController::class, 'store'])->name('blogs.create');
+Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.create');
 
