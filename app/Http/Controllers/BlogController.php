@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogRequest;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class BlogController extends Controller
 {
@@ -13,7 +14,15 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Blogs/ListBlogs');
+    }
+
+        /**
+     * Display a listing of the resource.
+     */
+    public function create()
+    {
+        return Inertia::render('Blogs/CreateBlog');
     }
 
     /**

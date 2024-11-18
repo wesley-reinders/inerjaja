@@ -2,7 +2,7 @@ import { AppShell, Burger, Button, Center, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { PropsWithChildren } from 'react';
 
-export function StandardLayout({children}: PropsWithChildren) {
+export default function StandardLayout({children}: PropsWithChildren) {
   const [opened, { toggle }] = useDisclosure();
 
   return (

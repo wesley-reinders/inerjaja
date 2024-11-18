@@ -1,24 +1,23 @@
 import BlogTextInput from '@/Components/Blog/BlogTextInput';
 import { Button, Center, Grid, Input, Modal, Space, Stack, TextInput } from '@mantine/core';
-import { Inertia } from '@inertiajs/inertia';
 import * as React from 'react';
-import { StandardLayout } from '@/Layouts/StandardLayout';
+import StandardLayout from '@/Layouts/StandardLayout';
 import { IconSection } from '@tabler/icons-react';
 import axios from 'axios';
 
-export interface DashboardProps {
+export interface CreateBlogProps {
 }
 
-export interface DashboardState {
+export interface CreateBlogState {
     title: string;
     components: any[];
     confirmModal: any;
 }
 
-export default class Dashboard extends React.Component<DashboardProps, DashboardState> {
+export default class CreateBlog extends React.Component<CreateBlogProps, CreateBlogState> {
     private idCounter: number;
 
-    constructor(props: DashboardProps) {
+    constructor(props: CreateBlogProps) {
         super(props);
 
         this.idCounter = 1;
@@ -43,8 +42,6 @@ export default class Dashboard extends React.Component<DashboardProps, Dashboard
     }
 
     addSection = () => {
-        console.log("Adding a new section");
-
         this.setState((prevState) => ({
             components: [...prevState.components, { id: ++this.idCounter, text: '' }]
         }));
@@ -98,7 +95,6 @@ export default class Dashboard extends React.Component<DashboardProps, Dashboard
     }
 
     public render() {
-        console.log(this.state.components)
         return (
             <StandardLayout>
                 <Center>

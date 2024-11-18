@@ -1,18 +1,13 @@
 <?php
 
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Login');
-})->name('login');
 
-Route::get('/blogs', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
+    Route::post('/blogs', [BlogController::class, 'store'])->name('dashboard');
+});
 
-Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.create');
-
+require __DIR__.'/auth.php';

@@ -1,92 +1,86 @@
-import { useToggle, upperFirst } from '@mantine/hooks';
-import { useForm } from '@mantine/form';
 import {
-  TextInput,
-  PasswordInput,
-  Text,
-  Paper,
-  Group,
-  PaperProps,
-  Button,
-  Divider,
-  Checkbox,
-  Anchor,
-  Stack,
-} from '@mantine/core';
+    Paper,
+    TextInput,
+    PasswordInput,
+    Checkbox,
+    Button,
+    Title,
+    Text,
+    Anchor,
+  } from '@mantine/core';
+  import classes from '/resources/css/Login.module.css';
+  import { useForm } from '@mantine/form';
+import axios from 'axios';
+import { router } from '@inertiajs/react';
 
-export function Login(props: PaperProps) {
-  const [type, toggle] = useToggle(['login', 'register']);
+
+
+export default function Login() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       email: '',
-      name: '',
       password: '',
-      terms: true,
+      keepLoggedIn: false
     },
 
     validate: {
-      email: (val: string) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val: string) => (val.length <= 6 ? 'Password should include at least 6 characters' : null),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      password: (value) => (value !== '' ? null : 'Password needs to be filled'),
     },
   });
 
+  const login = (values: { email: string; password: string}) => {
+    axios.post(route('login'), {
+      email: values.email,
+      password: values.password
+    })
+    .then(function (response) {
+      console.log(response);
+      window.location.href = '/blogs';
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   return (
-    <Paper radius="md" p="xl" withBorder {...props}>
-      <Text size="lg" fw={500}>
-        Welcome to Inerjaja, {type} with
-      </Text>
-      <form onSubmit={form.onSubmit(() => {})}>
-        <Stack>
-          {type === 'register' && (
-            <TextInput
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
-              onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
-              radius="md"
-            />
-          )}
+    <div className={classes.wrapper}>
+      <Paper className={classes.form} radius={0} p={30}>
+        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+          Welcome back to Inerjaja
+        </Title>
+        <form onSubmit={form.onSubmit((values) => login(values))}>
+          <TextInput 
+            label="Email address" 
+            placeholder="hello@gmail.com" 
+            size="md" 
+            key={form.key('email')}
+            {...form.getInputProps('email')}/>
 
-          <TextInput
-            required
-            label="Email"
-            placeholder="hello@mantine.dev"
-            value={form.values.email}
-            onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-            error={form.errors.email && 'Invalid email'}
-            radius="md"
+          <PasswordInput 
+            label="Password" 
+            placeholder="Your password" 
+            mt="md" 
+            size="md"
+            key={form.key('password')}
+            {...form.getInputProps('password')}
           />
-
-          <PasswordInput
-            required
-            label="Password"
-            placeholder="Your password"
-            value={form.values.password}
-            onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-            error={form.errors.password && 'Password should include at least 6 characters'}
-            radius="md"
-          />
-
-          {type === 'register' && (
-            <Checkbox
-              label="I accept terms and conditions"
-              checked={form.values.terms}
-              onChange={(event) => form.setFieldValue('terms', event.currentTarget.checked)}
-            />
-          )}
-        </Stack>
-
-        <Group justify="space-between" mt="xl">
-          <Anchor component="button" type="button" c="dimmed" onClick={() => toggle()} size="xs">
-            {type === 'register'
-              ? 'Already have an account? Login'
-              : "Don't have an account? Register"}
-          </Anchor>
-          <Button type="submit" radius="xl">
-            {upperFirst(type)}
+          <Checkbox label="Keep me logged in" mt="xl" size="md" />
+          <Button type='submit' fullWidth mt="xl" size="md">
+            Login
           </Button>
-        </Group>
-      </form>
-    </Paper>
+        </form>
+
+
+
+        <Text ta="center" mt="md">
+          Don&apos;t have an account?{' '}
+          <Anchor<'a'> href="#" fw={700} onClick={(event) => event.preventDefault()}>
+            Register
+          </Anchor>
+        </Text>
+      </Paper>
+    </div>
   );
 }
