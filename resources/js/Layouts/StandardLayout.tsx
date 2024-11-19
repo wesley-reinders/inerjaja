@@ -1,8 +1,8 @@
-import { AppShell, Burger, Center, Group } from '@mantine/core';
+import { AppShell, Burger, Button, Center, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { PropsWithChildren } from 'react';
 
-export function StandardLayout({children}: PropsWithChildren) {
+export default function StandardLayout({children}: PropsWithChildren) {
   const [opened, { toggle }] = useDisclosure();
 
   return (
@@ -17,9 +17,9 @@ export function StandardLayout({children}: PropsWithChildren) {
     >
       <AppShell.Header>
       <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <div>Inerjaja</div>
-        </Group>
+        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+        <div>Inerjaja</div>
+      </Group>
       </AppShell.Header>
 
       {/* <AppShell.Navbar p="md">Navbar</AppShell.Navbar> */}

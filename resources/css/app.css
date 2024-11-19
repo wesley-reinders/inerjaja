@@ -1,1 +1,9 @@
 @import '@mantine/core/styles.css';
+
+/* index.css or global CSS file */
+body {
+    background-color: #f8f9fa; /* Match the layout background color */
+    color: #333; /* Ensure default text color */
+    margin: 0;
+    padding: 0;
+}
