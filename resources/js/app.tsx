@@ -20,7 +20,9 @@ createInertiaApp({
 
         root.render(
         <MantineProvider>
-            <App {...props} />
+            <App {...props}>
+                
+            </App>
         </MantineProvider>
         );
     },

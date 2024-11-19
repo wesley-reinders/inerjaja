@@ -1,5 +1,5 @@
 import BlogTextInput from '@/Components/Blog/BlogTextInput';
-import { Button, Center, Grid, Input, Modal, Space, Stack, TextInput } from '@mantine/core';
+import { Button, Center, Modal, Space, Stack, TextInput } from '@mantine/core';
 import * as React from 'react';
 import StandardLayout from '@/Layouts/StandardLayout';
 import { IconSection } from '@tabler/icons-react';
@@ -88,7 +88,6 @@ export default class CreateBlog extends React.Component<CreateBlogProps, CreateB
                 console.error('Error creating blog:', error.response?.data || error.message);
             });
     };
-    
 
     onChange = (id: number, text: string) => {
         this.setText(id, text)

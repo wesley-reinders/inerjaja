@@ -14,7 +14,10 @@ class BlogController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Blogs/ListBlogs');
+        $blogs = Blog::query()->select('id', 'title', 'owner')->orderBy('created_at', 'desc')->get();
+        return Inertia::render('Blogs/ListBlogs', [
+            'blogs' => $blogs
+        ]);
     }
 
         /**

@@ -40,8 +40,8 @@ class StoreBlogRequest extends FormRequest
                     return;
                 }
 
-                if(count($content) > 5) {
-                    $validator->errors()->add('content', 'Content cannot have more than 20 sections.');
+                if(count($content) > 10) {
+                    $validator->errors()->add('content', 'Content cannot have more than 10 sections.');
                     return;
                 }
             }
