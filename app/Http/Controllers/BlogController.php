@@ -50,7 +50,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        return Inertia::render('Blogs/EditBlog');
     }
 
     /**
