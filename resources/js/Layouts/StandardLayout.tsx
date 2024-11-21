@@ -18,7 +18,8 @@ export default function StandardLayout({children}: PropsWithChildren) {
       <AppShell.Header>
       <Group h="100%" px="md">
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <div>Inerjaja</div>
+        <a href="/blogs">Inerjaja</a>
+        <Button onClick={() => window.location.href='/blogs/create'}>Create Blog</Button>
       </Group>
       </AppShell.Header>
 
