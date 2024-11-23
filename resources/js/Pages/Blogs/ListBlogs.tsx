@@ -3,7 +3,7 @@ import StandardLayout from '@/Layouts/StandardLayout';
 import { Grid, SimpleGrid } from '@mantine/core';
 import * as React from 'react';
 export interface IListBlogsProps {
-  blogs: [{id: number, title: string}];
+  blogs: [{id: number, title: string, readable_created_at: string}];
 }
 
 export default function ListBlogs(props: IListBlogsProps) {
