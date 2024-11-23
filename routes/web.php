@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
-    Route::get('/blogs/edit', [BlogController::class], 'update');
-    Route::post('/blogs', [BlogController::class, 'store']);
     Route::get('/blogs', [BlogController::class, 'index']);
+    Route::post('/blogs', [BlogController::class, 'store']);
+
+    Route::get('/blogs/create', [BlogController::class, 'show'])->name('blogs.create');
+    Route::patch('/blogs/edit', [BlogController::class], 'update');
 });
 
 require __DIR__.'/auth.php';

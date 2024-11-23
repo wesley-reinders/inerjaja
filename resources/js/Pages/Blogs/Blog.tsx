@@ -5,26 +5,27 @@ import StandardLayout from '@/Layouts/StandardLayout';
 import { IconSection } from '@tabler/icons-react';
 import axios from 'axios';
 
-export interface CreateBlogProps {
+export interface BlogProps {
+    blog: {title: string, content: []}
 }
 
-export interface CreateBlogState {
+export interface BlogState {
     title: string;
     components: any[];
     confirmModal: any;
 }
 
-export default class CreateBlog extends React.Component<CreateBlogProps, CreateBlogState> {
+export default class Blog extends React.Component<BlogProps, BlogState> {
     private idCounter: number;
 
-    constructor(props: CreateBlogProps) {
+    constructor(props: BlogProps) {
         super(props);
 
         this.idCounter = 1;
 
         this.state = {
-            title: "",
-            components: [{ id: this.idCounter, text: "" }],
+            title: props.blog.title ? props.blog.title : "",
+            components: props.blog.content ? props.blog.content : [{ id: this.idCounter, text: "" }],
             confirmModal: { open: false }
         };
     }

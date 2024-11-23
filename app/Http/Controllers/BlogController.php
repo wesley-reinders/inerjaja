@@ -14,18 +14,19 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::query()->select('id', 'title', 'owner')->orderBy('created_at', 'desc')->get();
-        return Inertia::render('Blogs/ListBlogs', [
-            'blogs' => $blogs
-        ]);
-    }
 
-        /**
-     * Display a listing of the resource.
-     */
-    public function create()
-    {
-        return Inertia::render('Blogs/CreateBlog');
+        $blogs = Blog::query()
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->map(function ($blog) {
+            $blog['readable_created_at'] = $blog->readable_created_at;
+            return $blog; // Ensure the modified $blog is returned
+        });
+
+    
+        return Inertia::render('Blogs/ListBlogs', [
+        'blogs' => $blogs
+        ]);
     }
 
     /**
@@ -42,7 +43,11 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        //
+        return Inertia::render('Blogs/Blog', [
+            'editable' => true,
+            'blog' => $blog
+        ]);
+
     }
 
     /**
