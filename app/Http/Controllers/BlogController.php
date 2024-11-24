@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlogRequest;
+use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,12 +31,22 @@ class BlogController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return Inertia::render('Blogs/CreateBlog', ['edit' => false]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreBlogRequest $request)
     {
         $blog = $request->all();
+
         Blog::query()->create($blog);
+        return to_route('blogs.index');
     }
 
     /**
@@ -43,19 +54,28 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        return Inertia::render('Blogs/Blog', [
-            'editable' => true,
-            'blog' => $blog
-        ]);
 
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Blog $blog)
+    {
+        return Inertia::render('Blogs/CreateBlog', ['blog' => $blog, 'edit' => true]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Blog $blog)
+    public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        return Inertia::render('Blogs/EditBlog');
+        $blog->title = $request->input('title');
+        $blog->content = $request->input('content');
+        
+        $blog->save();
+        return to_route('blogs.index');
     }
 
     /**

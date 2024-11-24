@@ -1,6 +1,7 @@
 import { AppShell, Burger, Button, Center, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { PropsWithChildren } from 'react';
+import {Inertia} from '@inertiajs/inertia';
 
 export default function StandardLayout({children}: PropsWithChildren) {
   const [opened, { toggle }] = useDisclosure();
@@ -19,7 +20,7 @@ export default function StandardLayout({children}: PropsWithChildren) {
       <Group h="100%" px="md">
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <a href="/blogs">Inerjaja</a>
-        <Button onClick={() => window.location.href='/blogs/create'}>Create Blog</Button>
+        <Button onClick={() => Inertia.visit(route('blogs.create'))}>Create Blog</Button>
       </Group>
       </AppShell.Header>
 

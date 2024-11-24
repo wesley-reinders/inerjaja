@@ -25,7 +25,7 @@ class StoreBlogRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'content' => 'required|json',
+            'content' => 'required|array',
             'owner' => 'required|string'
         ];
     }
@@ -34,14 +34,25 @@ class StoreBlogRequest extends FormRequest
     {
         return [
             function (Validator $validator) {
-                $content = json_decode(data_get($this, 'content'));
+                $content = data_get($this, 'content');
 
                 if ($validator->errors()->isNotEmpty()) {
                     return;
                 }
+                
+                foreach ($content as $index) {
+                    if ($index === "") {
+                        $validator->errors()->add('content', 'Content cannot be empty.');
+                        return;
+                    }
+                }
 
                 if(count($content) > 10) {
                     $validator->errors()->add('content', 'Content cannot have more than 10 sections.');
+                    return;
+                }
+                else if (count($content) < 1) {
+                    $validator->errors()->add('content', 'There needs to be atleast 1 content section.');
                     return;
                 }
             }

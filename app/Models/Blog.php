@@ -17,6 +17,10 @@ class Blog extends Model
         'owner'
     ];
 
+    protected $casts = [
+        'content' => 'array'
+    ];
+
     protected function readableCreatedAt(): Attribute
     {
         return Attribute::make(
