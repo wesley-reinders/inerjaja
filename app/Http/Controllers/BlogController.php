@@ -46,7 +46,7 @@ class BlogController extends Controller
         $blog = $request->all();
 
         Blog::query()->create($blog);
-        return to_route('blogs.index');
+        
     }
 
     /**
@@ -75,7 +75,6 @@ class BlogController extends Controller
         $blog->content = $request->input('content');
         
         $blog->save();
-        return to_route('blogs.index');
     }
 
     /**
