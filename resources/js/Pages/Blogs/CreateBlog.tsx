@@ -5,16 +5,17 @@ import axios from 'axios';
 import StandardLayout from '@/Layouts/StandardLayout';
 import BlogTextInput from '@/Components/Blog/BlogTextInput';
 import {Inertia} from '@inertiajs/inertia';
+import ConfirmModal  from '@/Components/ConfirmModal';
 
 export interface CreateBlogProps {
     blog: { id: number, title: string; content: string[] };
     edit: boolean;
 }
 
-const CreateBlog: React.FC<CreateBlogProps> = ({ blog, edit }) => {
-    const [title, setTitle] = useState(blog?.title || '');
+export function CreateBlog(props: CreateBlogProps) {
+    const [title, setTitle] = useState(props.blog?.title || '');
     const [components, setComponents] = useState(
-        blog?.content?.map((textContent, index) => ({
+        props.blog?.content?.map((textContent, index) => ({
             id: index + 1,
             text: textContent || '',
             delete: true,
@@ -51,7 +52,7 @@ const CreateBlog: React.FC<CreateBlogProps> = ({ blog, edit }) => {
         };
 
         axios
-            .patch(`/blogs/${blog.id}`, payload)
+            .patch(`/blogs/${props.blog.id}`, payload)
             .then((response) => {
                 console.log('Blog edited successfully:', response.data);
                 window.location.href = '/blogs';
@@ -112,23 +113,19 @@ const CreateBlog: React.FC<CreateBlogProps> = ({ blog, edit }) => {
                     >
                         Add new section
                     </Button>
-                    { edit ?
+                    { props.edit ?
                         <Button onClick={() => setConfirmModal(true)}>Edit blog</Button>
                         :
                         <Button onClick={() => setConfirmModal(true)}>Create blog</Button>
                     }
-                    <Modal
+                    <ConfirmModal
                         opened={confirmModal}
+                        onConfirm={props.edit ? editBlog : createBlog}
                         onClose={() => setConfirmModal(false)}
-                        title={edit ? 'Edit blog' : 'Create blog'}
+                        title={props.edit ? 'Edit blog' : 'Create blog'}
+                        description='Are you sure you want to do this?'
                     >
-                        <Button onClick={() => setConfirmModal(false)} color="red">
-                            No
-                        </Button>
-                        <Button onClick={edit ? editBlog : createBlog} color="blue">
-                            Yes
-                        </Button>
-                    </Modal>
+                    </ConfirmModal>
                 </Stack>
             </Center>
         </StandardLayout>

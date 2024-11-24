@@ -1,25 +1,32 @@
-import { Button, Modal } from '@mantine/core';
-import * as React from 'react';
+import { Button, ButtonGroup, Modal, Stack } from "@mantine/core";
 
 export interface IConfirmModalProps {
-    cancel: void;
-    confirm: void;
+    title: string;
+    description?: string;
+    opened: boolean;
+    onClose: () => void;
+    onConfirm: () => void;
 }
 
-export function ConfirmModal (props: IConfirmModalProps) {
-  return (
-    <p>modal</p>
-//     <Modal
-//     opened={confirmModal}
-//     onClose={() => setConfirmModal(false)}
-//     title={edit ? 'Edit blog' : 'Create blog'}
-// >
-//     <Button onClick={() => setConfirmModal(false)} color="red">
-//         No
-//     </Button>
-//     <Button onClick={edit ? editBlog : createBlog} color="blue">
-//         Yes
-//     </Button>
-// </Modal>
-  );
+export default function ConfirmModal(props: IConfirmModalProps) {
+    return (
+        <Modal
+            opened={props.opened}
+            onClose={props.onClose}
+            title={props.title}
+        >
+            <Stack>
+                <small>{props.description}</small>
+
+                <ButtonGroup>
+                    <Button onClick={props.onClose} color="red">
+                        No
+                    </Button>
+                    <Button onClick={props.onConfirm} color="blue">
+                        Yes
+                    </Button>
+                </ButtonGroup>
+            </Stack>
+        </Modal>
+    );
 }
