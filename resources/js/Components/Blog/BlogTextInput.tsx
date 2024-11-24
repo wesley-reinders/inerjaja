@@ -1,57 +1,55 @@
-import { ActionIcon, Button, Container, Stack, Textarea } from "@mantine/core";
+import React, { useState } from "react";
+import { ActionIcon, Textarea } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
-import React, { Component } from "react";
 
 type BlogTextInputProps = {
-  onChange: (text: string) => void;
-  onDelete: () => void;
+    onChange: (text: string) => void;
+    onDelete: () => void;
+    delete: boolean;
+    initialValue: string;
 };
 
-type BlogTextInputState = {
-  text: string;
-};
+const BlogTextInput: React.FC<BlogTextInputProps> = ({
+    onChange,
+    onDelete,
+    delete: showDeleteButton,
+    initialValue,
+}) => {
+    const [text, setText] = useState(initialValue);
 
-class BlogTextInput extends Component<BlogTextInputProps, BlogTextInputState> {
-  constructor(props: BlogTextInputProps) {
-    super(props);
-    this.state = { text: "" };
-  }
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const newText = event.currentTarget.value;
+        setText(newText);
+        onChange(newText);
+    };
 
-  handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newText = event.currentTarget.value;
-    this.setState({ text: newText });
-
-    this.props.onChange(newText);
-  };
-
-  render() {
     return (
-      <div style={{ position: 'relative', width: '100%', height: '200px' }}>
-      <Textarea
-        value={this.state.text}
-        onChange={this.handleChange}
-        radius="md"
-        h={200}
-        styles={{
-          wrapper: { height: '100%' },
-          input: { height: '100%', paddingBottom: '100px' }, // Adjust padding for button space
-        }}
-        placeholder="Section text"
-      />
-      <ActionIcon variant="transparent"
-        color="red"
-        pos={"absolute"}
-        right={"10px"}
-        bottom={"10px"}
-        onClick={this.props.onDelete}
-      >
-        <IconTrash/>
-      </ActionIcon>
-      </div>
-
-
+        <div style={{ position: "relative", width: "100%", height: "200px" }}>
+            <Textarea
+                value={text}
+                onChange={handleChange}
+                radius="md"
+                h={200}
+                styles={{
+                    wrapper: { height: "100%" },
+                    input: { height: "100%", paddingBottom: "100px" }, // Adjust padding for button space
+                }}
+                placeholder="Section text"
+            />
+            {showDeleteButton && (
+                <ActionIcon
+                    variant="transparent"
+                    color="red"
+                    pos={"absolute"}
+                    right={"10px"}
+                    bottom={"10px"}
+                    onClick={onDelete}
+                >
+                    <IconTrash />
+                </ActionIcon>
+            )}
+        </div>
     );
-  }
-}
+};
 
 export default BlogTextInput;

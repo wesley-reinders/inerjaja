@@ -1,12 +1,13 @@
 import { Card, Image, Group, Text, Badge, Button } from "@mantine/core";
-import * as React from "react";
 
 export interface IBlogCardProps {
-    blog: { title: string, readable_created_at: string };
+    blog: { id: number; title: string; readable_created_at: string };
 }
 
 export function BlogCard(props: IBlogCardProps) {
 
+
+    
 
     return (
         <Card shadow="sm" radius="md" withBorder>
@@ -17,6 +18,12 @@ export function BlogCard(props: IBlogCardProps) {
                     alt="Norway"
                 />
             </Card.Section>
+            <Badge
+                variant="gradient"
+                gradient={{ from: "yellow", to: "red" }}
+            >
+                Posted
+            </Badge>
 
             <Group justify="space-between" mt="md" mb="xs">
                 <Text fw={500}>{props.blog.title}</Text>
@@ -31,10 +38,19 @@ export function BlogCard(props: IBlogCardProps) {
             <p>{props.blog.readable_created_at}</p>
 
             <Button.Group>
-                <Button m={'1rem'} color="blue" fullWidth mt="md" radius="md">
+                <Button
+                    onClick={() =>
+                        (window.location.href = `/blogs/${props.blog.id}/edit`)
+                    }
+                    m={"1rem"}
+                    color="blue"
+                    fullWidth
+                    mt="md"
+                    radius="md"
+                >
                     Edit
                 </Button>
-                <Button m={'1rem'} color="red" fullWidth mt="md" radius="md">
+                <Button m={"1rem"} color="red" fullWidth mt="md" radius="md">
                     Delete
                 </Button>
             </Button.Group>

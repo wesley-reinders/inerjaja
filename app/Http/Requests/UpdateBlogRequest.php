@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class UpdateBlogRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateBlogRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,37 @@ class UpdateBlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string',
+            'content' => 'required|array',
+        ];
+    }
+
+    public function after()
+    {
+        return [
+            function (Validator $validator) {
+                $content = data_get($this, 'content');
+
+                if ($validator->errors()->isNotEmpty()) {
+                    return;
+                }
+                
+                foreach ($content as $index) {
+                    if ($index === "" || is_null($index)) {
+                        $validator->errors()->add('content', 'Content cannot be empty.');
+                        return;
+                    }
+                }
+
+                if(count($content) > 10) {
+                    $validator->errors()->add('content', 'Content cannot have more than 10 sections.');
+                    return;
+                }
+                else if (count($content) < 1) {
+                    $validator->errors()->add('content', 'There needs to be atleast 1 content section.');
+                    return;
+                }
+            }
         ];
     }
 }
