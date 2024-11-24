@@ -14,7 +14,8 @@ class Blog extends Model
     protected $fillable = [
         'title',
         'content',
-        'owner'
+        'owner',
+        'status'
     ];
 
     protected $casts = [

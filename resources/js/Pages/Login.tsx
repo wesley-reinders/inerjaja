@@ -40,7 +40,7 @@ export default function Login() {
       window.location.href = '/blogs';
     })
     .catch(function (error) {
-      console.log(error);
+      console.warn("Account does not exist");
     });
   }
 
