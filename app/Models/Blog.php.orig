@@ -15,8 +15,12 @@ class Blog extends Model
         'title',
         'content',
         'owner',
+<<<<<<< HEAD
         'status',
         'send_at'
+=======
+        'status'
+>>>>>>> main
     ];
 
     protected $casts = [

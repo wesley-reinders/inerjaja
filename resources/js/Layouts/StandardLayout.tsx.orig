@@ -1,12 +1,39 @@
+<<<<<<< HEAD
 import { AppShell, Burger, Button, Center, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { PropsWithChildren } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
+=======
+import { AppShell, Burger, Button, Center, Group } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { PropsWithChildren } from 'react';
+import {Inertia} from '@inertiajs/inertia';
+>>>>>>> main
 
 export default function StandardLayout({ children }: PropsWithChildren) {
     const [opened, { toggle }] = useDisclosure();
 
+<<<<<<< HEAD
+=======
+  return (
+    <AppShell
+      header={{ height: 60 }}
+    //   navbar={{
+    //     width: 300,
+    //     breakpoint: 'sm',
+    //     collapsed: { mobile: !opened },
+    //   }}
+      padding="md"
+    >
+      <AppShell.Header>
+      <Group h="100%" px="md">
+        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+        <a href="/blogs">Inerjaja</a>
+        <Button onClick={() => Inertia.visit(route('blogs.create'))}>Create Blog</Button>
+      </Group>
+      </AppShell.Header>
+>>>>>>> main
 
     function logout() {
         axios
